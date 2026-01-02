@@ -12,7 +12,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-semibold text-[#D8A24A] mb-2">1. Informazioni Generali</h2>
             <p>
-              Movie Finder è un'applicazione web che aiuta gli utenti a scoprire film e serie TV disponibili sulle
+             The Movie Finder è un'applicazione web che aiuta gli utenti a scoprire film e serie TV disponibili sulle
               piattaforme di streaming italiane. L'app offre due modalità di utilizzo: Basic (gratuita con limitazioni)
               e Premium (ricerca avanzata illimitata).
             </p>
@@ -20,7 +20,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-semibold text-[#D8A24A] mb-2">2. Dati Raccolti</h2>
-            <p className="mb-2">Movie Finder raccoglie e utilizza i seguenti dati:</p>
+            <p className="mb-2">The Movie Finder raccoglie e utilizza i seguenti dati:</p>
             <ul className="list-disc pl-6 space-y-1">
               <li>
                 <strong>Modalità Basic:</strong> L'app memorizza localmente (nel browser) il numero di ricerche
@@ -53,7 +53,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-semibold text-[#D8A24A] mb-2">4. Condivisione Dati</h2>
             <p>
-              Movie Finder non condivide i tuoi dati personali con terze parti, ad eccezione dei servizi esterni
+             The Movie Finder non condivide i tuoi dati personali con terze parti, ad eccezione dei servizi esterni
               necessari per il funzionamento dell'app come descritto sopra.
             </p>
           </section>
