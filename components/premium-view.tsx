@@ -106,23 +106,20 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
 
   if (!mode.premium) {
     return (
-      <div className="min-h-screen p-6 flex items-center justify-center relative">
-        <img src="/background.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
-        <div className="max-w-md text-center space-y-6 relative z-10">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-2">🔒</h1>
-            <h2 className="text-2xl font-bold">Funzionalità Premium</h2>
-            <p className="text-[#A0826D]">
-              Questa funzione è disponibile solo per gli utenti Premium. Accedi con Google per sbloccare tutte le
-              funzionalità.
-            </p>
-            <button
-              onClick={() => onNavigate("choice")}
-              className="bg-[#D8A24A] hover:bg-[#C89239] text-[#0f0e0d] font-bold py-3 px-6 rounded-lg transition-all"
-            >
-              Torna indietro
-            </button>
-          </div>
+      <div className="min-h-screen bg-[#0f0e0d] text-[#F0C87A] p-6 flex items-center justify-center">
+        <div className="max-w-md text-center space-y-6">
+          <div className="text-6xl mb-4">🔒</div>
+          <h2 className="text-2xl font-bold">Funzionalità Premium</h2>
+          <p className="text-[#A0826D]">
+            Questa funzione è disponibile solo per gli utenti Premium. Accedi con Google per sbloccare tutte le
+            funzionalità.
+          </p>
+          <button
+            onClick={() => onNavigate("choice")}
+            className="bg-[#D8A24A] hover:bg-[#C89239] text-[#0f0e0d] font-bold py-3 px-6 rounded-lg transition-all"
+          >
+            Torna indietro
+          </button>
         </div>
       </div>
     )
@@ -130,12 +127,11 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
 
   if (step === "login") {
     return (
-      <div className="min-h-screen max-h-screen overflow-y-auto p-6 flex items-center justify-center relative elegant-stripes">
-        <img src="/background.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
-        <div className="max-w-md w-full space-y-4 relative z-10">
+      <div className="min-h-screen max-h-screen overflow-y-auto bg-[#0f0e0d] text-[#F0C87A] p-6 flex items-center justify-center">
+        <div className="max-w-md w-full space-y-4">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-2">Cosa vuoi cercare?</h1>
-            <p className="text-yellow-400 text-xs">Scegli tra film o serie TV</p>
+            <p className="text-[#A0826D] text-xs">Scegli tra film o serie TV</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -144,10 +140,7 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
                 setMediaType("movie")
                 setStep("platform")
               }}
-              className="bg-red-500/30 backdrop-blur-3xl border-2 border-red-400/60 hover:border-red-300/80 hover:bg-red-500/40 text-red-200 p-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-[0_8px_30px_rgba(239,68,68,0.8)] shadow-[inset_0_2px_20px_rgba(239,68,68,0.2)]"
-              style={{
-                backdropFilter: "blur(70px) saturate(300%)",
-              }}
+              className="bg-[#1a1712] border-2 border-[#4a3f2d] hover:border-[#D8A24A] hover:bg-[#2a2419] text-[#F0C87A] p-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-[0_8px_20px_rgba(216,162,74,0.3)]"
             >
               <div className="mb-3 flex justify-center">
                 <img
@@ -155,12 +148,12 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
                   alt="Film"
                   className="w-16 h-16"
                   style={{
-                    filter: "drop-shadow(0 0 20px rgba(239, 68, 68, 0.7))",
+                    filter: "drop-shadow(0 0 15px rgba(240, 200, 122, 0.4))",
                   }}
                 />
               </div>
-              <h2 className="text-xl font-bold mb-1 text-red-100">Film</h2>
-              <p className="text-red-300 text-xs">Cerca il film perfetto per te</p>
+              <h2 className="text-xl font-bold mb-1">Film</h2>
+              <p className="text-[#A0826D] text-xs">Cerca il film perfetto per te</p>
             </button>
 
             <button
@@ -168,10 +161,7 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
                 setMediaType("tv")
                 setStep("platform")
               }}
-              className="bg-emerald-500/30 backdrop-blur-3xl border-2 border-emerald-400/60 hover:border-emerald-300/80 hover:bg-emerald-500/40 text-emerald-200 p-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-[0_8px_30px_rgba(16,185,129,0.8)] shadow-[inset_0_2px_20px_rgba(16,185,129,0.2)]"
-              style={{
-                backdropFilter: "blur(70px) saturate(300%)",
-              }}
+              className="bg-[#151a15] border-2 border-[#3a5a3a] hover:border-[#6B9B6E] hover:bg-[#1a2419] text-[#A8D5AA] p-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-[0_8px_20px_rgba(107,155,110,0.3)]"
             >
               <div className="mb-3 flex justify-center">
                 <img
@@ -179,12 +169,12 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
                   alt="Serie TV"
                   className="w-16 h-16"
                   style={{
-                    filter: "drop-shadow(0 0 20px rgba(16, 185, 129, 0.7))",
+                    filter: "drop-shadow(0 0 15px rgba(107, 155, 110, 0.4))",
                   }}
                 />
               </div>
-              <h2 className="text-xl font-bold mb-1 text-emerald-100">Serie TV</h2>
-              <p className="text-emerald-300 text-xs">Scopri la serie perfetta per te</p>
+              <h2 className="text-xl font-bold mb-1">Serie TV</h2>
+              <p className="text-[#7AA87C] text-xs">Scopri la serie perfetta per te</p>
             </button>
           </div>
 
@@ -193,7 +183,7 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
               console.log("[v0] Navigating to rankings")
               onNavigate("rankings")
             }}
-            className="w-full bg-white/5 backdrop-blur-xl hover:bg-yellow-500/20 hover:text-white text-yellow-300 border-2 border-yellow-500/40 hover:border-yellow-400/70 font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 hover:shadow-[0_8px_20px_rgba(234,179,8,0.6)] text-lg"
+            className="w-full bg-[#2a2419] hover:bg-[#D8A24A] hover:text-[#0f0e0d] text-[#F0C87A] border-2 border-[#D8A24A] font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 hover:shadow-[0_8px_20px_rgba(216,162,74,0.4)] text-lg"
           >
             <img src="/icon-512-v6.png" alt="" className="w-6 h-6" />
             Classifiche
@@ -201,9 +191,9 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
 
           <button
             onClick={() => onNavigate("login")}
-            className="w-full bg-white/5 backdrop-blur-xl hover:bg-yellow-500/10 text-white border-2 border-yellow-500/40 hover:border-yellow-400/50 font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95"
+            className="w-full bg-transparent border-2 border-[#4a3f2d] text-[#F0C87A] hover:bg-[#2a2419] hover:border-[#D8A24A] font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95"
           >
-            ← Indietro
+            ← Torna a log in
           </button>
         </div>
       </div>
@@ -212,22 +202,19 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
 
   if (step === "platform") {
     return (
-      <div className="min-h-screen max-h-screen overflow-y-auto p-6 relative elegant-stripes">
-        <img src="/background.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
-        <div className="max-w-3xl mx-auto pb-4 relative z-10">
+      <div
+        className={`min-h-screen max-h-screen overflow-y-auto p-6 ${mediaType === "tv" ? "bg-[#0f120e] text-[#A8D5AA]" : "bg-[#0f0e0d] text-[#F0C87A]"}`}
+      >
+        <div className="max-w-3xl mx-auto pb-4">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold mb-2">Piattaforme Preferite</h1>
-            <p className={`text-sm ${mediaType === "tv" ? "text-emerald-300" : "text-red-300"}`}>
+            <p className={`text-sm ${mediaType === "tv" ? "text-[#7AA87C]" : "text-[#A0826D]"}`}>
               Seleziona le piattaforme dove preferisci guardare i contenuti (opzionale)
             </p>
           </div>
 
           <div
-            className={`bg-white/5 backdrop-blur-xl border-2 rounded-lg p-4 mb-6 ${
-              mediaType === "tv"
-                ? "border-emerald-500/30 shadow-[0_16px_56px_rgba(16,185,129,0.4)]"
-                : "border-red-500/30 shadow-[0_16px_56px_rgba(239,68,68,0.4)]"
-            }`}
+            className={`rounded-lg p-4 mb-6 border-2 ${mediaType === "tv" ? "bg-[#151a15] border-[#2a3f2a]" : "bg-[#1a1712] border-[#2a2419]"}`}
           >
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {STREAMING_PLATFORMS.map((platform) => (
@@ -237,11 +224,11 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
                   className={`p-3 rounded-lg font-semibold text-sm transition-all duration-300 border-2 ${
                     selectedPlatforms.includes(platform.id)
                       ? mediaType === "tv"
-                        ? "bg-emerald-500/40 backdrop-blur-xl text-white border-emerald-400/70 shadow-[0_8px_20px_rgba(16,185,129,0.7)]"
-                        : "bg-red-500/40 backdrop-blur-xl text-white border-red-400/70 shadow-[0_8px_20px_rgba(239,68,68,0.7)]"
+                        ? "bg-[#6B9B6E] text-[#0f120e] border-[#6B9B6E] shadow-[0_8px_20px_rgba(107,155,110,0.4)]"
+                        : "bg-[#D8A24A] text-[#0f0e0d] border-[#D8A24A] shadow-[0_8px_20px_rgba(216,162,74,0.4)]"
                       : mediaType === "tv"
-                        ? "bg-white/5 backdrop-blur-xl text-emerald-200 border-emerald-500/20 hover:bg-emerald-500/10 hover:border-emerald-400/40 hover:shadow-[0_4px_12px_rgba(16,185,129,0.3)]"
-                        : "bg-white/5 backdrop-blur-xl text-red-200 border-red-500/20 hover:bg-red-500/10 hover:border-red-400/40 hover:shadow-[0_4px_12px_rgba(239,68,68,0.3)]"
+                        ? "bg-[#1a2a1a] text-[#A8D5AA] border-[#3a5a3a] hover:bg-[#2a3a2a] hover:shadow-[0_4px_12px_rgba(107,155,110,0.2)]"
+                        : "bg-[#2a2419] text-[#F0C87A] border-[#4a3f2d] hover:bg-[#3a3429] hover:shadow-[0_4px_12px_rgba(216,162,74,0.2)]"
                   }`}
                   style={{
                     transform: selectedPlatforms.includes(platform.id) ? "translateY(-2px)" : "translateY(0)",
@@ -265,20 +252,20 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
           <div className="flex gap-4">
             <button
               onClick={() => setStep("login")}
-              className={`flex-1 font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 bg-white/5 backdrop-blur-xl border-2 ${
+              className={`flex-1 font-bold py-4 px-6 rounded-lg transition-all duration-300 border-2 transform hover:scale-105 active:scale-95 ${
                 mediaType === "tv"
-                  ? "text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/10 hover:border-emerald-400/50 hover:shadow-[0_4px_12px_rgba(16,185,129,0.3)]"
-                  : "text-red-300 border-red-500/30 hover:bg-red-500/10 hover:border-red-400/50 hover:shadow-[0_4px_12px_rgba(239,68,68,0.3)]"
+                  ? "bg-[#1a2a1a] hover:bg-[#2a3a2a] text-[#A8D5AA] border-[#3a5a3a] hover:shadow-[0_4px_12px_rgba(107,155,110,0.2)]"
+                  : "bg-[#2a2419] hover:bg-[#3a3429] text-[#F0C87A] border-[#4a3f2d] hover:shadow-[0_4px_12px_rgba(216,162,74,0.2)]"
               }`}
             >
               ← Indietro
             </button>
             <button
               onClick={() => setStep("genre")}
-              className={`flex-1 font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-xl border-2 ${
+              className={`flex-1 font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 ${
                 mediaType === "tv"
-                  ? "bg-emerald-500/40 hover:bg-emerald-500/50 text-white border-emerald-400/70 shadow-[0_8px_20px_rgba(16,185,129,0.6)] hover:shadow-[0_12px_28px_rgba(16,185,129,0.7)]"
-                  : "bg-red-500/40 hover:bg-red-500/50 text-white border-red-400/70 shadow-[0_8px_20px_rgba(239,68,68,0.6)] hover:shadow-[0_12px_28px_rgba(239,68,68,0.7)]"
+                  ? "bg-[#6B9B6E] hover:bg-[#5A8A5D] text-[#0f120e] shadow-[0_8px_20px_rgba(107,155,110,0.3)] hover:shadow-[0_12px_28px_rgba(107,155,110,0.4)]"
+                  : "bg-[#D8A24A] hover:bg-[#C89239] text-[#0f0e0d] shadow-[0_8px_20px_rgba(216,162,74,0.3)] hover:shadow-[0_12px_28px_rgba(216,162,74,0.4)]"
               }`}
             >
               Avanti →
@@ -291,20 +278,19 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
 
   if (step === "genre") {
     return (
-      <div className="min-h-screen max-h-screen overflow-hidden p-3 relative">
-        <img src="/background.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
-        <div className="max-w-3xl mx-auto h-full flex flex-col justify-between py-1 relative z-10">
+      <div
+        className={`min-h-screen max-h-screen overflow-hidden p-3 ${mediaType === "tv" ? "bg-[#0f120e] text-[#A8D5AA]" : "bg-[#0f0e0d] text-[#F0C87A]"}`}
+      >
+        <div className="max-w-3xl mx-auto h-full flex flex-col justify-between py-1">
           <div className="text-center mb-2">
             <h1 className="text-xl font-bold mb-1">Preferenze di Genere</h1>
-            <p className={`text-xs ${mediaType === "tv" ? "text-emerald-400" : "text-red-400"}`}>
+            <p className={`text-xs ${mediaType === "tv" ? "text-[#7AA87C]" : "text-[#A0826D]"}`}>
               Usa gli slider per indicare quanto ti piace ogni genere (0-10)
             </p>
           </div>
 
           <div
-            className={`rounded-lg p-3 mb-2 border-2 flex-shrink overflow-y-auto backdrop-blur-xl ${
-              mediaType === "tv" ? "bg-emerald-950/30 border-emerald-500/30" : "bg-red-950/30 border-red-500/30"
-            }`}
+            className={`rounded-lg p-3 mb-2 border-2 flex-shrink overflow-y-auto ${mediaType === "tv" ? "bg-[#151a15] border-[#2a3f2a]" : "bg-[#1a1712] border-[#2a2419]"}`}
             style={{ maxHeight: "calc(100vh - 200px)" }}
           >
             <div className="space-y-2">
@@ -312,7 +298,7 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
                 <div key={genre.key}>
                   <div className="flex justify-between mb-0.5">
                     <span className="font-semibold text-xs">{genre.label}</span>
-                    <span className={`font-bold text-xs ${mediaType === "tv" ? "text-emerald-400" : "text-red-400"}`}>
+                    <span className={`font-bold text-xs ${mediaType === "tv" ? "text-[#6B9B6E]" : "text-[#D8A24A]"}`}>
                       {sliders[genre.key]}
                     </span>
                   </div>
@@ -324,30 +310,27 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
                     onChange={(e) => handleSliderChange(genre.key, Number(e.target.value))}
                     className="w-full h-1.5 rounded-lg appearance-none cursor-pointer slider"
                     style={{
-                      background:
-                        mediaType === "tv"
-                          ? `linear-gradient(to right, 
-                        #064e3b 0%, 
-                        #10b981 ${(sliders[genre.key] / 10) * 100}%)`
-                          : `linear-gradient(to right, 
-                        #7f1d1d 0%, 
-                        #ef4444 ${(sliders[genre.key] / 10) * 100}%)`,
+                      background: `linear-gradient(to right, 
+                        ${mediaType === "tv" ? "#2a3f2a" : "#2a2419"} 0%, 
+                        ${mediaType === "tv" ? "#3a5a3a" : "#4a3f2d"} ${(sliders[genre.key] / 10) * 30}%, 
+                        ${mediaType === "tv" ? "#5a8a5a" : "#8a7a4d"} ${(sliders[genre.key] / 10) * 60}%, 
+                        ${mediaType === "tv" ? "#6B9B6E" : "#D8A24A"} ${(sliders[genre.key] / 10) * 100}%)`,
                     }}
                   />
                 </div>
               ))}
 
-              <div className="pt-2 border-t border-white/10">
+              <div className="pt-2 border-t border-[#3a3429]">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={includeAnimation}
                     onChange={(e) => setIncludeAnimation(e.target.checked)}
-                    className={`w-4 h-4 cursor-pointer ${mediaType === "tv" ? "accent-emerald-500" : "accent-red-500"}`}
+                    className="w-4 h-4 cursor-pointer accent-[#D8A24A]"
                   />
                   <span className="font-semibold text-xs">Includi Animazione</span>
                 </label>
-                <p className={`text-xs mt-0.5 ml-6 ${mediaType === "tv" ? "text-emerald-400" : "text-red-400"}`}>
+                <p className={`text-xs mt-0.5 ml-6 ${mediaType === "tv" ? "text-[#7AA87C]" : "text-[#A0826D]"}`}>
                   Attiva per includere film/serie di animazione
                 </p>
               </div>
@@ -357,7 +340,7 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
           <div className="relative h-6 mb-2">
             {status && (
               <div className="absolute inset-0 flex items-center justify-center">
-                <p className={`text-xs font-semibold ${mediaType === "tv" ? "text-emerald-400" : "text-red-400"}`}>
+                <p className={`text-xs font-semibold ${mediaType === "tv" ? "text-[#7AA87C]" : "text-[#A0826D]"}`}>
                   {status}
                 </p>
               </div>
@@ -367,10 +350,10 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
           <div className="flex gap-2">
             <button
               onClick={() => setStep("platform")}
-              className={`flex-1 font-bold py-3 px-4 rounded-lg transition-all duration-300 border-2 transform hover:scale-105 active:scale-95 text-sm bg-white/5 backdrop-blur-xl border-2 ${
+              className={`flex-1 font-bold py-3 px-4 rounded-lg transition-all duration-300 border-2 transform hover:scale-105 active:scale-95 text-sm ${
                 mediaType === "tv"
-                  ? "text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/10 hover:border-emerald-400/50 hover:shadow-[0_4px_12px_rgba(16,185,129,0.3)]"
-                  : "text-red-300 border-red-500/30 hover:bg-red-500/10 hover:border-red-400/50 hover:shadow-[0_4px_12px_rgba(239,68,68,0.3)]"
+                  ? "bg-[#1a2a1a] hover:bg-[#2a3a2a] text-[#A8D5AA] border-[#3a5a3a] hover:shadow-[0_4px_12px_rgba(107,155,110,0.2)]"
+                  : "bg-[#2a2419] hover:bg-[#3a3429] text-[#F0C87A] border-[#4a3f2d] hover:shadow-[0_4px_12px_rgba(216,162,74,0.2)]"
               }`}
               disabled={isLoading}
             >
@@ -378,10 +361,10 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
             </button>
             <button
               onClick={handleReset}
-              className={`flex-1 font-bold py-3 px-4 rounded-lg transition-all duration-300 border-2 transform hover:scale-105 active:scale-95 text-sm bg-white/5 backdrop-blur-xl ${
+              className={`flex-1 font-bold py-3 px-4 rounded-lg transition-all duration-300 border-2 transform hover:scale-105 active:scale-95 text-sm ${
                 mediaType === "tv"
-                  ? "text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/10 hover:border-emerald-400/50 hover:shadow-[0_4px_12px_rgba(16,185,129,0.3)]"
-                  : "text-red-300 border-red-500/30 hover:bg-red-500/10 hover:border-red-400/50 hover:shadow-[0_4px_12px_rgba(239,68,68,0.3)]"
+                  ? "bg-[#1a2a1a] hover:bg-[#2a3a2a] text-[#A8D5AA] border-[#3a5a3a] hover:shadow-[0_4px_12px_rgba(107,155,110,0.2)]"
+                  : "bg-[#2a2419] hover:bg-[#3a3429] text-[#F0C87A] border-[#4a3f2d] hover:shadow-[0_4px_12px_rgba(216,162,74,0.2)]"
               }`}
               disabled={isLoading}
             >
@@ -390,10 +373,10 @@ export function PremiumView({ mode, onNavigate }: PremiumViewProps) {
             <button
               onClick={handleFind}
               disabled={isLoading}
-              className={`flex-1 font-bold py-3 px-4 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95 text-sm backdrop-blur-xl border-2 ${
+              className={`flex-1 font-bold py-3 px-4 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95 text-sm ${
                 mediaType === "tv"
-                  ? "bg-emerald-500/30 hover:bg-emerald-500/40 text-white border-emerald-400/60 shadow-[0_8px_20px_rgba(16,185,129,0.4)] hover:shadow-[0_12px_28px_rgba(16,185,129,0.5)]"
-                  : "bg-red-500/30 hover:bg-red-500/40 text-white border-red-400/60 shadow-[0_8px_20px_rgba(239,68,68,0.4)] hover:shadow-[0_12px_28px_rgba(239,68,68,0.5)]"
+                  ? "bg-[#6B9B6E] hover:bg-[#5A8A5D] text-[#0f120e] shadow-[0_8px_20px_rgba(107,155,110,0.3)] hover:shadow-[0_12px_28px_rgba(107,155,110,0.4)]"
+                  : "bg-[#D8A24A] hover:bg-[#C89239] text-[#0f0e0d] shadow-[0_8px_20px_rgba(216,162,74,0.3)] hover:shadow-[0_12px_28px_rgba(216,162,74,0.4)]"
               }`}
             >
               {isLoading ? "Cercando..." : "Cerca"}

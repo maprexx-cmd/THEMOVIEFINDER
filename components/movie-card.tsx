@@ -14,38 +14,31 @@ export function MovieCard({ result, isTvMode = false, isBasicMode = false }: Mov
   const { item, providers, mediaType } = result
   const { toggleWatched, isWatched, triggerClosingEffect } = useMovieStore()
   const [watched, setWatched] = useState(false)
-  const cardBg = mediaType === "tv" ? "bg-emerald-500/10" : "bg-[#141414]"
-
-  const cardBorder = isBasicMode ? "border-cyan-400/40" : "border-yellow-500/40"
-
+  const cardBg = "bg-[#141414]"
+  const cardBorder = isBasicMode ? "border-[#0ea5e9]/20" : isTvMode ? "border-[#10b981]/20" : "border-[#d4af37]/20"
   const cardHover = isBasicMode
-    ? "hover:border-cyan-400/80 hover:shadow-[0_24px_48px_rgba(6,182,212,0.5)]"
-    : "hover:border-yellow-400/80 hover:shadow-[0_24px_48px_rgba(234,179,8,0.5)]"
-
+    ? "hover:border-[#0ea5e9] hover:shadow-[0_20px_40px_rgba(14,165,233,0.2)]"
+    : isTvMode
+      ? "hover:border-[#10b981] hover:shadow-[0_20px_40px_rgba(16,185,129,0.2)]"
+      : "hover:border-[#d4af37] hover:shadow-[0_20px_40px_rgba(212,175,55,0.2)]"
   const titleColor = "text-white"
   const subtitleColor = "text-stone-500"
-
-  const accentColor = isBasicMode ? "text-cyan-400" : "text-yellow-400"
-
+  const accentColor = isBasicMode ? "text-[#38bdf8]" : isTvMode ? "text-[#34d399]" : "text-[#d4af37]"
   const textColor = "text-stone-400"
   const btnSecondaryBg = "bg-[#1a1a1a]"
   const btnSecondaryHover = "hover:bg-[#262626]"
-
-  const btnSecondaryText = isBasicMode ? "text-cyan-400" : "text-yellow-400"
-
+  const btnSecondaryText = isBasicMode ? "text-[#38bdf8]" : isTvMode ? "text-[#34d399]" : "text-[#d4af37]"
   const btnPrimaryBg = isBasicMode
-    ? "bg-gradient-to-r from-cyan-500/50 to-blue-500/50 backdrop-blur-xl border border-cyan-400/50"
-    : "bg-gradient-to-r from-yellow-500/50 to-amber-500/50 backdrop-blur-xl border border-yellow-400/50"
-
+    ? "bg-gradient-to-r from-[#0ea5e9] to-[#0284c7]"
+    : isTvMode
+      ? "bg-gradient-to-r from-[#10b981] to-[#059669]"
+      : "bg-gradient-to-r from-[#d4af37] to-[#c39d2a]"
   const btnPrimaryHover = isBasicMode
-    ? "hover:from-cyan-500/70 hover:to-blue-500/70"
-    : "hover:from-yellow-500/70 hover:to-amber-500/70"
-
-  const btnPrimaryText = isBasicMode ? "text-white" : "text-black"
-
-  const btnPrimaryShadow = isBasicMode
-    ? "shadow-[0_0_30px_rgba(6,182,212,0.7),0_8px_20px_rgba(6,182,212,0.5)] hover:shadow-[0_0_45px_rgba(6,182,212,0.9),0_12px_30px_rgba(6,182,212,0.7)]"
-    : "shadow-[0_0_30px_rgba(234,179,8,0.7),0_8px_20px_rgba(234,179,8,0.5)] hover:shadow-[0_0_45px_rgba(234,179,8,0.9),0_12px_30px_rgba(234,179,8,0.7)]"
+    ? "hover:from-[#38bdf8] hover:to-[#0ea5e9]"
+    : isTvMode
+      ? "hover:from-[#34d399] hover:to-[#10b981]"
+      : "hover:from-[#e5c048] hover:to-[#d4af37]"
+  const btnPrimaryText = "text-white"
 
   const handleShare = async () => {
     const appUrl = typeof window !== "undefined" ? window.location.origin : ""
@@ -105,16 +98,20 @@ export function MovieCard({ result, isTvMode = false, isBasicMode = false }: Mov
 
   return (
     <div
-      className={`glass-card ${isBasicMode ? "glass-card-basic" : "glass-card-premium"} rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-1 ${cardBg} ${cardBorder} ${cardHover}`}
+      className={`glass-card ${isBasicMode ? "glass-card-basic" : "glass-card-premium"} rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-1`}
     >
-      <div className="md:flex">
+      <div className="flex flex-col sm:flex-row">
         {posterUrl && (
-          <div className="md:w-40 flex-shrink-0">
-            <img src={posterUrl || "/placeholder.svg"} alt={title || "Poster"} className="w-full h-full object-cover" />
+          <div className="sm:w-32 flex-shrink-0">
+            <img
+              src={posterUrl || "/placeholder.svg"}
+              alt={title || "Poster"}
+              className="w-full h-48 sm:h-full object-cover"
+            />
           </div>
         )}
 
-        <div className="p-6 flex-1">
+        <div className="p-4 sm:p-6 flex-1">
           <div>
             <div className="flex items-start justify-between gap-4 mb-4">
               <div>
@@ -230,18 +227,18 @@ export function MovieCard({ result, isTvMode = false, isBasicMode = false }: Mov
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={handleShare}
-                className={`${btnSecondaryBg} ${btnSecondaryHover} ${btnSecondaryText} border border-[#262626] font-medium py-2 px-4 rounded-xl transition-all text-sm transform hover:-translate-y-1 tracking-wide`}
+                className={`${btnSecondaryBg} ${btnSecondaryHover} ${btnSecondaryText} border border-[#262626] font-medium py-3 px-6 rounded-xl transition-all text-sm transform hover:-translate-y-1 tracking-wide`}
               >
                 Condividi
               </button>
               <button
                 onClick={handleWatch}
-                className={`${btnPrimaryBg} ${btnPrimaryHover} ${btnPrimaryText} ${btnPrimaryShadow} font-semibold py-2 px-4 rounded-xl transition-all text-sm transform hover:-translate-y-1 tracking-wide`}
+                className={`${btnPrimaryBg} ${btnPrimaryHover} ${btnPrimaryText} font-semibold py-3 px-6 rounded-xl transition-all text-sm transform hover:-translate-y-1 shadow-lg tracking-wide`}
               >
                 Guarda
               </button>
               <div
-                className={`font-medium py-2 px-4 rounded-xl text-sm tracking-wide ${
+                className={`font-medium py-3 px-6 rounded-xl text-sm tracking-wide ${
                   watched ? "bg-emerald-600 text-white" : "bg-[#1a1a1a] text-stone-600 border border-[#262626]"
                 }`}
               >

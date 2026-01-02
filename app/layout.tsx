@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     icon: ["/icon-192-v6.png"],
     apple: "/icon-512-v6.png",
   },
+  other: {
+    "screen-orientation": "portrait",
+  },
 }
 
 export const viewport: Viewport = {
@@ -32,6 +35,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
+      <head>
+        <meta name="screen-orientation" content="portrait" />
+        <meta name="x5-orientation" content="portrait" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      </head>
       <body className={`font-sans antialiased`}>
         {children}
         <Analytics />

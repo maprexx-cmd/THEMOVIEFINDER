@@ -9,7 +9,6 @@ interface MovieStore {
   onlineOnly: boolean
   isClosing: boolean
   preferredPlatforms: number[]
-  hasPremium: boolean
   setResults: (results: MovieResult[], source: "basic" | "premium", mediaType?: "movie" | "tv") => void
   clearResults: () => void
   toggleWatched: (mediaType: "movie" | "tv", id: number) => void
@@ -18,8 +17,6 @@ interface MovieStore {
   loadWatchedFromStorage: () => void
   triggerClosingEffect: () => Promise<void>
   setPreferredPlatforms: (platforms: number[]) => void
-  checkPremiumStatus: () => void
-  unlockPremium: () => void
 }
 
 function watchedKey(mediaType: "movie" | "tv", id: number): string {
@@ -34,7 +31,6 @@ export const useMovieStore = create<MovieStore>((set, get) => ({
   onlineOnly: false,
   isClosing: false,
   preferredPlatforms: [],
-  hasPremium: false,
 
   setResults: (results, source, mediaType = "movie") => set({ results, source, mediaType }),
   clearResults: () => set({ results: null, source: null, mediaType: null }),
@@ -51,6 +47,7 @@ export const useMovieStore = create<MovieStore>((set, get) => ({
 
     set({ watchedMovies: watched })
 
+    // Salva in localStorage
     if (typeof window !== "undefined") {
       localStorage.setItem("watchedMovies", JSON.stringify(Array.from(watched)))
     }
@@ -79,12 +76,15 @@ export const useMovieStore = create<MovieStore>((set, get) => ({
 
   triggerClosingEffect: async () => {
     set({ isClosing: true })
-    await new Promise((resolve) => setTimeout(resolve, 4000))
+    await new Promise((resolve) => setTimeout(resolve, 6000))
     set({ isClosing: false })
 
+    // Tentativo di chiudere l'app dopo l'effetto
     if (typeof window !== "undefined") {
+      // Prova a chiudere la finestra/tab
       window.close()
 
+      // Se window.close() non funziona (browser policy), reindirizza alla homepage
       setTimeout(() => {
         window.location.href = "/"
       }, 500)
@@ -92,18 +92,4 @@ export const useMovieStore = create<MovieStore>((set, get) => ({
   },
 
   setPreferredPlatforms: (platforms) => set({ preferredPlatforms: platforms }),
-
-  checkPremiumStatus: () => {
-    if (typeof window !== "undefined") {
-      const premiumUnlocked = localStorage.getItem("premiumUnlocked") === "true"
-      set({ hasPremium: premiumUnlocked })
-    }
-  },
-
-  unlockPremium: () => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("premiumUnlocked", "true")
-      set({ hasPremium: true })
-    }
-  },
 }))

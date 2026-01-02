@@ -21,25 +21,8 @@ export function BasicView({ mode, onNavigate }: BasicViewProps) {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [status, setStatus] = useState("Seleziona i generi e clicca Trova 3 film")
+  const [showLimitModal, setShowLimitModal] = useState(false)
   const setResults = useMovieStore((state) => state.setResults)
-
-  const checkUsageLimit = () => {
-    if (typeof window === "undefined") return true
-
-    const lastUsage = localStorage.getItem("basicLastUsage")
-    const now = Date.now()
-
-    if (lastUsage) {
-      const timeDiff = now - Number.parseInt(lastUsage)
-      const hoursDiff = timeDiff / (1000 * 60 * 60)
-
-      if (hoursDiff < 24) {
-        return false
-      }
-    }
-
-    return true
-  }
 
   const handleGenreToggle = (genreId: number) => {
     setSelectedGenres((prev) => (prev.includes(genreId) ? prev.filter((id) => id !== genreId) : [...prev, genreId]))
@@ -51,25 +34,12 @@ export function BasicView({ mode, onNavigate }: BasicViewProps) {
       return
     }
 
-    if (!checkUsageLimit()) {
-      setStatus("Hai raggiunto il limite giornaliero. Torna domani o passa a Premium!")
-      setTimeout(() => {
-        onNavigate("login")
-      }, 3000)
-      return
-    }
-
     setIsLoading(true)
     setStatus("Sto cercando il film giusto per te...")
 
     try {
       const results = await searchBasicMovies(selectedGenres)
       setResults(results, "basic")
-
-      if (typeof window !== "undefined") {
-        localStorage.setItem("basicLastUsage", Date.now().toString())
-      }
-
       onNavigate("results")
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "Errore durante la ricerca")
@@ -78,20 +48,43 @@ export function BasicView({ mode, onNavigate }: BasicViewProps) {
     }
   }
 
-  return (
-    <div className="min-h-screen max-h-screen overflow-y-auto p-6 relative elegant-stripes">
-      <img src="/background.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+  const handleLimitModalClose = () => {
+    setShowLimitModal(false)
+    onNavigate("login")
+  }
 
-      <div className="max-w-2xl mx-auto pb-36 relative z-10">
+  return (
+    <div className="min-h-screen max-h-screen overflow-y-auto bg-[#0a0a0a] text-white p-6 relative">
+      {showLimitModal && (
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="bg-[#141414] border border-[#0ea5e9]/30 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
+            <div className="mb-6">
+              <div className="inline-block p-4 rounded-full bg-[#0ea5e9]/10 mb-4">
+                <img src="/icon-512-v6.png" alt="Movie Finder" className="w-16 h-16" />
+              </div>
+            </div>
+            <h2 className="text-3xl font-light text-white mb-2 tracking-wider">Scelte Terminate</h2>
+            <p className="text-stone-400 mb-8 text-sm tracking-wide">Torna domani per nuove scelte</p>
+            <button
+              onClick={handleLimitModalClose}
+              className="w-full bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] hover:from-[#38bdf8] hover:to-[#0ea5e9] text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-1"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="max-w-2xl mx-auto pb-36">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 bg-cyan-500/20 border border-cyan-400/50 px-5 py-2 rounded-full mb-6">
-            <span className="text-sm font-medium tracking-wider text-cyan-300 uppercase">{mode.label}</span>
+          <div className="inline-flex items-center gap-2 bg-[#0ea5e9]/10 border border-[#0ea5e9]/30 px-5 py-2 rounded-full mb-6">
+            <span className="text-sm font-medium tracking-wider text-[#38bdf8] uppercase">{mode.label}</span>
           </div>
           <h1 className="text-4xl font-light mb-3 tracking-wide">Modalità Basic</h1>
           <p className="text-stone-500 text-sm tracking-wide">3 film al giorno • Generi base</p>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl border border-cyan-400/30 rounded-2xl p-6 mb-6 shadow-[0_16px_56px_rgba(6,182,212,0.4)]">
+        <div className="bg-[#141414] border border-[#262626] rounded-2xl p-6 mb-6 shadow-xl">
           <h2 className="text-xl font-light mb-6 text-center tracking-wide">Seleziona i generi</h2>
           <div className="grid grid-cols-2 gap-3">
             {GENRES.map((genre) => (
@@ -99,8 +92,8 @@ export function BasicView({ mode, onNavigate }: BasicViewProps) {
                 key={genre.key}
                 className={`flex items-center justify-center gap-3 p-5 rounded-xl cursor-pointer transition-all duration-300 transform hover:-translate-y-1 ${
                   selectedGenres.includes(genre.value)
-                    ? "bg-gradient-to-br from-cyan-500/40 to-blue-500/40 backdrop-blur-xl text-white shadow-[0_8px_20px_rgba(6,182,212,0.7)] border-2 border-cyan-400/70"
-                    : "bg-white/5 backdrop-blur-xl text-stone-300 hover:bg-cyan-500/10 border border-cyan-400/20 hover:border-cyan-400/40"
+                    ? "bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] text-white shadow-[0_8px_20px_rgba(14,165,233,0.4)]"
+                    : "bg-[#1a1a1a] text-stone-400 hover:bg-[#262626] border border-[#262626] hover:border-[#3a3a3a]"
                 }`}
               >
                 <input
@@ -122,7 +115,7 @@ export function BasicView({ mode, onNavigate }: BasicViewProps) {
         <div className="flex gap-3 mb-4">
           <button
             onClick={() => setSelectedGenres([])}
-            className="flex-1 bg-white/5 backdrop-blur-xl hover:bg-cyan-500/10 text-cyan-300 border border-cyan-400/20 hover:border-cyan-400/40 font-medium py-3 px-5 rounded-xl transition-all duration-300 transform hover:-translate-y-1 text-sm tracking-wide"
+            className="flex-1 bg-[#1a1a1a] hover:bg-[#262626] text-white border border-[#262626] hover:border-[#3a3a3a] font-medium py-4 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-1 text-sm tracking-wide"
             disabled={isLoading}
           >
             Cancella
@@ -130,7 +123,7 @@ export function BasicView({ mode, onNavigate }: BasicViewProps) {
           <button
             onClick={handleFind}
             disabled={isLoading || selectedGenres.length === 0}
-            className="flex-1 bg-gradient-to-r from-cyan-500/50 to-blue-500/50 backdrop-blur-xl hover:from-cyan-500/70 hover:to-blue-500/70 text-white font-semibold py-3 px-5 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_8px_30px_rgba(6,182,212,0.6)] transform hover:-translate-y-1 text-sm tracking-wide border border-cyan-400/50"
+            className="flex-1 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] hover:from-[#38bdf8] hover:to-[#0ea5e9] text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_8px_20px_rgba(14,165,233,0.3)] transform hover:-translate-y-1 text-sm tracking-wide"
           >
             {isLoading ? "Cercando..." : "Trova 3 film"}
           </button>
@@ -138,22 +131,15 @@ export function BasicView({ mode, onNavigate }: BasicViewProps) {
 
         <button
           onClick={() => onNavigate("login")}
-          className="w-full bg-white/5 backdrop-blur-xl border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500/20 hover:border-cyan-400/60 font-medium py-3 px-5 rounded-xl transition-all duration-300 transform hover:-translate-y-1 text-sm tracking-wide"
+          className="w-full bg-transparent border border-[#0ea5e9]/30 text-[#38bdf8] hover:bg-[#0ea5e9]/10 hover:border-[#0ea5e9] font-medium py-4 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-1 text-sm tracking-wide"
         >
-          ⭐ Passa a Premium
-        </button>
-
-        <button
-          onClick={() => onNavigate("login")}
-          className="w-full bg-white/5 backdrop-blur-xl border border-white/20 text-white hover:bg-white/10 hover:border-white/30 font-medium py-3 px-5 rounded-xl transition-all duration-300 transform hover:-translate-y-1 text-sm tracking-wide mt-3"
-        >
-          ← Indietro
+          Passa a Premium
         </button>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-black/60 backdrop-blur-xl border-t border-white/10">
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#0a0a0a] border-t border-[#1a1a1a]">
         <div className="max-w-2xl mx-auto p-4">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 min-h-[100px] flex items-center justify-center">
+          <div className="bg-[#141414] border border-[#262626] rounded-xl p-6 min-h-[100px] flex items-center justify-center">
             <div className="text-center">
               <p className="text-stone-600 text-xs mb-2 uppercase tracking-wider">Pubblicità</p>
               <div id="adsense-placeholder" className="text-stone-700 text-sm">
