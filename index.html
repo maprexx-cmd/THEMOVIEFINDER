@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#120c08">
+
+  <title>The Movie Finder</title>
+
+  <style>
+    body { margin: 0; font-family: system-ui, Arial, sans-serif; background: #120c08; color: #fff; }
+    .hidden { display: none !important; }
+    .section { padding: 20px; }
+    h2 { margin: 0 0 16px 0; font-weight: 600; }
+
+    button {
+      padding: 14px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background: #e0b36a;
+      color: #120c08;
+      cursor: pointer;
+    }
+
+    button.secondary { background: #333; color: #fff; margin-top: 12px; }
+    .btnRow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+
+    input[type="range"] { width: 100%; margin: 12px 0 20px 0; }
+
+    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 10px 0 14px 0; }
+
+    .chip {
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 8px 10px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .chip.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .note { opacity: 0.75; font-size: 13px; margin-top: 8px; }
+
+    .flash { animation: flash 0.15s; }
+    @keyframes flash {
+      0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+      50% { box-shadow: 0 0 18px rgba(255,255,255,0.6); }
+      100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+    }
+
+    #resultsGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+
+    .card { background: #1b120d; border-radius: 8px; padding: 10px; text-align: center; position: relative; }
+
+    .posterBox {
+      height: 190px;
+      border-radius: 6px;
+      background: #2a1b15;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .posterBox img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .card-title { font-size: 14px; font-weight: 650; margin-bottom: 6px; line-height: 1.15; }
+    .card-meta { font-size: 12px; opacity: 0.85; margin-bottom: 10px; }
+
+    .watchedTag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.20);
+      color: #fff;
+      user-select: none;
+    }
+
+    .watchedTag.on {
+      background: rgba(0,200,120,0.25);
+      border: 1px solid rgba(0,200,120,0.55);
+      color: #bfffe3;
+    }
+
+    #exitOverlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: #fff;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 22px;
+      line-height: 1.4;
+      letter-spacing: 1px;
+      padding: 18px;
+    }
+
+    #exitOverlay.show { display: flex; }
+
+    .modePill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid #333;
+      background:#1b120d;
+      font-size:12px;
+      opacity:0.95;
+      margin: 0 0 12px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="loginView" class="section">
+    <h2>The Movie Finder</h2>
+    <button type="button" onclick="login()">Accedi</button>
+  </div>
+
+  <div id="basicView" class="section hidden">
+    <div id="modePill" class="modePill">Modalità</div>
+    <h2 id="filtersTitle">Cosa vuoi guardare</h2>
+
+    <h3 style="margin:18px 0 8px 0;font-size:16px;font-weight:600">Disponibilità</h3>
+    <div class="row">
+      <label class="chip">
+        <input id="onlyOnline" type="checkbox" checked>
+        Solo online
+      </label>
+
+      <label id="hideWatchedChip" class="chip">
+        <input id="hideWatched" type="checkbox" checked>
+        Nascondi guardati
+      </label>
+    </div>
+
+    <h3 style="margin:14px 0 8px 0;font-size:16px;font-weight:600">Piattaforme</h3>
+    <div class="row" id="basicPlatforms">
+      <label class="chip">
+        <input class="plat" type="checkbox" data-provider="Netflix" checked>
+        Netflix
+      </label>
+      <label class="chip">
+        <input class="plat" type="checkbox" data-provider="Amazon Prime Video" checked>
+        Prime Video
+      </label>
+      <label class="chip">
+        <input class="plat" type="checkbox" data-provider="Disney Plus" checked>
+        Disney+
+      </label>
+    </div>
+
+    <div class="note">
+      Se non trovi risultati, disattiva Solo online oppure togli una piattaforma.
+    </div>
+
+    <h3 style="margin:18px 0 8px 0;font-size:16px;font-weight:600">Generi</h3>
+
+    <label>Azione</label>
+    <input id="slAzione" type="range" min="0" max="10" step="1" value="0">
+
+    <label>Drammatico</label>
+    <input id="slDrammatico" type="range" min="0" max="10" step="1" value="0">
+
+    <label>Fantascienza</label>
+    <input id="slSciFi" type="range" min="0" max="10" step="1" value="0">
+
+    <div id="premiumGenresWrap" class="hidden">
+      <label>Commedia</label>
+      <input id="slCommedia" type="range" min="0" max="10" step="1" value="0">
+
+      <label>Horror</label>
+      <input id="slHorror" type="range" min="0" max="10" step="1" value="0">
+
+      <label>Thriller</label>
+      <input id="slThriller" type="range" min="0" max="10" step="1" value="0">
+
+      <label>Romantico</label>
+      <input id="slRomantico" type="range" min="0" max="10" step="1" value="0">
+
+      <label>Fantasy</label>
+      <input id="slFantasy" type="range" min="0" max="10" step="1" value="0">
+
+      <label>Avventura</label>
+      <input id="slAvventura" type="range" min="0" max="10" step="1" value="0">
+    </div>
+
+    <label class="chip" style="margin-top:10px">
+      <input id="flagAnimazione" type="checkbox" checked>
+      Animazione
+    </label>
+
+    <div class="btnRow">
+      <button type="button" onclick="searchMovies()">Trova film</button>
+      <button type="button" class="secondary" onclick="resetBasic()">Pulisci</button>
+    </div>
+  </div>
+
+  <div id="resultsView" class="section hidden">
+    <h2 id="resultsTitle">Risultati</h2>
+    <div id="resultsGrid"></div>
+
+    <div class="btnRow">
+      <button type="button" class="secondary" onclick="backToSearch()">Indietro</button>
+      <button id="btnMore" type="button" onclick="moreResults()">Altri 10</button>
+    </div>
+  </div>
+
+  <div id="exitOverlay">
+    METTITI COMODO<br>
+    INIZIA IL TUO SPETTACOLO
+  </div>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js");
+      });
+    }
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>
