@@ -56,6 +56,7 @@ export function ResultsView({ mode, onBack }: ResultsViewProps) {
   const totalPages = Math.ceil(filteredResults.length / RESULTS_PER_PAGE)
   const startIndex = (currentPage - 1) * RESULTS_PER_PAGE
   const endIndex = startIndex + RESULTS_PER_PAGE
+
   const resultsToShow = isBasicMode ? filteredResults : filteredResults.slice(startIndex, endIndex)
   const showPagination = !isBasicMode && totalPages > 1
 
@@ -77,23 +78,8 @@ export function ResultsView({ mode, onBack }: ResultsViewProps) {
   }
 
   return (
-    <div className={`min-h-screen p-6 ${isBasicMode ? "pb-32" : ""} relative elegant-stripes`}>
+    <div className="min-h-screen p-6 relative elegant-stripes">
       <img src="/background.png" alt="" className="fixed inset-0 w-full h-full object-cover opacity-50" />
-
-      {isBasicMode && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-black/60 backdrop-blur-xl border-t border-white/10">
-          <div className="max-w-6xl mx-auto p-4">
-            <div className="bg-white/5 backdrop-blur-xl rounded-lg p-4 border border-white/10 min-h-[100px] flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-blue-400 text-xs mb-1">Pubblicità</p>
-                <div id="adsense-placeholder" className="text-stone-600 text-sm">
-                  {/* AdSense code goes here */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-8">
@@ -108,11 +94,14 @@ export function ResultsView({ mode, onBack }: ResultsViewProps) {
               {source === "premium" ? "PREMIUM" : "BASIC"}
             </span>
           </div>
+
           <h1 className="text-3xl font-bold mb-2 text-white">I tuoi risultati</h1>
+
           <p className="text-sm text-gray-400">
             Abbiamo trovato {filteredResults.length} {filteredResults.length === 1 ? "titolo" : "titoli"} per te
           </p>
-          {totalPages > 1 && (
+
+          {!isBasicMode && totalPages > 1 && (
             <p className="text-xs mt-2 text-gray-400">
               Pagina {currentPage} di {totalPages}
             </p>
